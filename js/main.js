@@ -14,7 +14,7 @@ var startYear = 2020,
 
 //render map
 var projection = d3.geo.stereographic()
-    .scale(200)
+    .scale(300)
     .translate([width / 2, height / 2])
     .rotate([-20, 0])
     .clipAngle(130)
@@ -27,7 +27,6 @@ var path = d3.geo.path()
 
 d3.json('map_data/world.json', function(error, world) {
 	if (error) return console.error(error);
-	console.log(world);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
 
@@ -44,20 +43,27 @@ d3.json('map_data/world.json', function(error, world) {
 	    	})
 	    .attr('d', path);
 
-	svg.selectAll(".subunit-label")
-    .data(topojson.feature(uk, uk.objects.subunits).features)
-  .enter().append("text")
-    .attr("class", function(d) { return "subunit-label " + d.id; })
-    .attr("transform", function(d) { return "translate(" + path.centroid(d) + ")"; })
-    .attr("dy", ".35em")
-    .text(function(d) { return d.properties.name; });
+	svg.selectAll('.subunit-label')
+		.data(topojson.feature(world, world.objects.subunits).features)
+	.enter().append('text')
+		.attr('class', function(d) { return 'subunit-label ' + d.id; })
+		.attr('transform', function(d) { return 'translate(' + path.centroid(d) + ')'; })
+		.attr('dy', '.1em')
+		//.style({'color':'green', 'display':'none'})
+		.text(function(d) { return d.properties.name; });
+
+	svg.selectAll('.subunit')
+		.on('mouseenter', function(){ 
+			svg.select('.subunit-label.' + this.classList[1])
+				.style('display', 'block');
+		});
 });
 
 //api call
 d3.jsonp('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/' + startYear + '/' + endYear + '/' + countryCode + '?callback=handler');
 
 function handler(json) {
-	console.log(json);
+	//console.log(json);
 }
 
 

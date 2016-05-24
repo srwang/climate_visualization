@@ -3,9 +3,13 @@ h1 {
 }
 
 #map {
-	background-color: rgb(19, 19, 74);
+/* 	background-color: rgb(19, 19, 74); */
 }
 
 .subunit {
 	fill: lightgreen;
+}
+
+.subunit-label {
+	color: green;
 }
