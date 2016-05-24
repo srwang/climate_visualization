@@ -49,14 +49,18 @@ d3.json('map_data/world.json', function(error, world) {
 		.attr('class', function(d) { return 'subunit-label ' + d.id; })
 		.attr('transform', function(d) { return 'translate(' + path.centroid(d) + ')'; })
 		.attr('dy', '.1em')
-		//.style({'color':'green', 'display':'none'})
+		.style({'color':'green', 'display':'none'})
 		.text(function(d) { return d.properties.name; });
 
 	svg.selectAll('.subunit')
 		.on('mouseenter', function(){ 
 			svg.select('.subunit-label.' + this.classList[1])
 				.style('display', 'block');
-		});
+		})
+		.on('mouseleave', function(){
+			svg.select('.subunit-label.' + this.classList[1])
+				.style('display', 'none');
+		})
 });
 
 //api call
