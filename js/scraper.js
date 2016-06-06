@@ -11,11 +11,11 @@ request(url, function (error, response, body) {
 
 
 		text = text.substring(text.indexOf('&#xA0;<br>\r\n') + 12, text.indexOf('bwe ') + 4);
-		text = text.split('<br>\r\n');
+		text = text.split(' <br>\r\n');
 		  
 		for (var i=0; i<text.length; i++) {
-			var countryCode = text[i].split(' ')[0],
-				countryName = text[i].split(' ')[1];
+			var countryCode = text[i].split(/ (.+)?/)[0],
+				countryName = text[i].split(/ (.+)?/)[1];
 
 			countryCodes[countryName] = countryCode;
 		};
