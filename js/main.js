@@ -57,8 +57,8 @@ d3.json('map_data/world.json', function(error, world) {
 		.on('mouseenter', function(){ 
 			svg.select('.subunit-label.' + this.classList[1])
 				.style('display', 'block')
-				.transition(3000)
-				.style('fill', 'black');
+				.style('fill', 'black')
+				.transition(8000);
 		})
 		.on('mouseleave', function(){
 			svg.select('.subunit-label.' + this.classList[1])
@@ -76,12 +76,17 @@ d3.jsonp('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annuala
 
 function handler(json) {
 	//console.log(json);
+
 }
 
 
-//fade in
 //read docs
-//figure out api call
+//iterate through, grab data, and cache
+//link data to SVGs
+//create range slider
+//make keys
+//embed additional images or side-bars, etc. 
+
 
 
 
