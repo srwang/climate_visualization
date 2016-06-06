@@ -22,11 +22,11 @@ request(url, function (error, response, body) {
 
 		//console.log(countryCodes);
 
-		fs.writeFile('country_codes.json', JSON.stringify(countryCodes), function (error){
+		fs.writeFile('../map_data/country_codes.json', JSON.stringify(countryCodes), function (error){
 			if (error) {
 				console.log(error);
 			}
-		})
+		});
 
 	} else {
 		console.log('We’ve encountered an error: ' + error);

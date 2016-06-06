@@ -7,7 +7,7 @@ d3.jsonp = function (url, callback) {
   }
 
   function create(url) {
-    var e = url.match(/callback=d3.jsonp.(\w+)/),
+    var e = url.match(/prefix=d3.jsonp.(\w+)/),
       c = e ? e[1] : rand();
     d3.jsonp[c] = function(data) {
       callback(data);
@@ -21,5 +21,5 @@ d3.jsonp = function (url, callback) {
     script = d3.select('head')
     .append('script')
     .attr('type', 'text/javascript')
-    .attr('src', url.replace(/(\{|%7B)callback(\}|%7D)/, cb));
+    .attr('src', url.replace(/(\{|%7B)prefix(\}|%7D)/, cb));
 };
