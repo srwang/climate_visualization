@@ -67,26 +67,28 @@ d3.json('map_data/world.json', function (error, world) {
 		});
 });
 
+
+
 //api call
-var startYear = 2020,
-	endYear = 2039;
+// var startYear = 2020,
+// 	endYear = 2039;
 
-d3.json('map_data/country_codes.json', function (error, codes){
-	if (error) return console.log(error);
+// d3.json('map_data/country_codes.json', function (error, codes){
+// 	if (error) return console.log(error);
 
-	for (countryName in codes) {
-		var countryCode = codes[countryName];
+// 	for (countryName in codes) {
+// 		var countryCode = codes[countryName];
 
-		d3.jsonp('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/' + startYear + '/' + endYear + '/' + countryCode + '?callback=handler');
-	}
-});	
+// 		d3.jsonp('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/' + startYear + '/' + endYear + '/' + countryCode + '?callback=handler');
+// 	}
+// });	
 
-function handler(json) {
-	if (json) {
+// function handler(json) {
+// 	if (json) {
 
-	}
-	//cache the json 
-}
+// 	}
+// 	//cache the json 
+// }
 
 
 //adjust function to add different range of years
