@@ -68,33 +68,56 @@ d3.json('map_data/world.json', function (error, world) {
 });
 
 
+//COLORS!!!
 
-//api call
-// var startYear = 2020,
-// 	endYear = 2039;
+function findYearRange() {
+	var yearRanges = {0: [2020, 2039], 1: [2040, 2059], 2: [2060, 2079], 3: [2080, 2099]},
+		rangeKey = $(this).val(),
+		range = yearRanges[rangeKey];
 
-// d3.json('map_data/country_codes.json', function (error, codes){
-// 	if (error) return console.log(error);
+	return range;
+}
 
-// 	for (countryName in codes) {
-// 		var countryCode = codes[countryName];
+$('#year-selector').change(function(){
+	var range = findYearRange();
+	$('#selector-label').text(range[0] + ' -- ' + range[1]);
 
-// 		d3.jsonp('http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/' + startYear + '/' + endYear + '/' + countryCode + '?callback=handler');
-// 	}
-// });	
+	//give it initial load
+});
 
-// function handler(json) {
-// 	if (json) {
+d3.json('map_data/country_codes.json', function (error, codes){
+	if (error) return console.log(error);
 
-// 	}
-// 	//cache the json 
-// }
+	for (countryName in codes) {
+		var countryCode = codes[countryName],
+			yearRange = findYearRange();
+
+		d3.json('http://localhost:3000/api/' + countryCode, function(){
+
+			//rework backend
+		});
+	}
+});	
 
 
-//adjust function to add different range of years
+//have possible values
+//on click, you can reset the colors of the map (and have a fade effect)
+	//click button is highlighted and others will dim
+	//2020-2039 is selected first by default
+
+
+//create max and min
+//get the color to change depending on the segment
+//have a label above each segment
+
+
+//adjust code to grab by both countryCode and period
+	//range slider for period
 //write a second function to grab from cache and attach class based on temperature
 	//find by path ID
 //write backend CSS- colors based on class
+	//make a rough color key of temperatures 
+	//have the temperature go up by a certain hex number per degree change
 
 
 //read docs
@@ -106,7 +129,7 @@ d3.json('map_data/world.json', function (error, world) {
 //make keys
 //embed additional images or side-bars, etc. 
 
-//fade
+//colors fade in and out
 
 
 

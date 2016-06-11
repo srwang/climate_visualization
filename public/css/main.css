@@ -18,3 +18,10 @@ h1 {
 .subunit-label {
 	color: green;
 }
+
+/*range-slider*/
+#year-selector {
+	width: 30%;
+	margin: 0px auto;
+	outline: none;
+}

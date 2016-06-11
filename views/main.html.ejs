@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<meta charset="utf-8">
-<link href="http://localhost:3000/css/main.css" rel="stylesheet" type="text/css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js"></script>
-<script src="//d3js.org/topojson.v1.min.js"></script>
-<script src="http://localhost:3000/js/jsonp.js"></script>
+<meta charset='utf-8'>
+<link href='http://localhost:3000/css/main.css' rel='stylesheet' type='text/css'>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js'></script>
+<script src='//d3js.org/topojson.v1.min.js'></script>
+<script src='http://localhost:3000/js/jsonp.js'></script>
 
 <head>
 	<title>Bloom</title>
@@ -12,8 +12,11 @@
 
 <body>
 	<h1>Climate Map</h1>
-	<div id="map"></div>
-	<script src="http://localhost:3000/js/main.js"></script>
+	<div id='map'></div>
+	<input id='year-selector' type='range' value='0' min='0' max='3' step='1'></input>
+	<p id='selector-label'>2020 -- 2039</p>
+<!-- 	<div id='selectors'></div> -->
+	<script src='http://localhost:3000/js/main.js'></script>
 </body>
 
 
