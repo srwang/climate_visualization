@@ -33,21 +33,23 @@ client.on('connect', function() {
     console.log('Connected to Redis');
 });
 
-function getCountryJson(code) {
-	var apiEndpoint = 'http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/2020/2039/' + code;
+function getCountryJson(startYear, endYear, code) {
+	var apiEndpoint = 'http://climatedataapi.worldbank.org/climateweb/rest/v1/country/annualavg/tas/' + startYear + '/' + endYear + '/' + code;
 	return axios.get(apiEndpoint);
 }
 
-app.get('/api/:code', function (req, res){
+app.get('/api/:code/:yearRange', function (req, res){
 
-  	var countryCode = req.params.code;
+  	var countryCode = req.params.code,
+  		startYear = req.params.yearRange.split('to')[0],
+  		endYear = req.params.yearRange.split('to')[1];
 
 	//get data from cache or get from api and store in cache
 	client.get(countryCode, function(error, result) {
 	  	if (result) {
 	  		res.send({'climateData': JSON.parse(result), 'source': 'redis cache'});
 	  	} else {
-	  		getCountryJson(countryCode)
+	  		getCountryJson(startYear, endYear, countryCode)
 	  			.then(function(response){
 	  				client.setex(countryCode, 1800, JSON.stringify(response.data));
 	  				res.send({'climateData': response.data, 'source': 'World Bank API'});
