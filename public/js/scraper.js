@@ -22,7 +22,7 @@
 // 			countryCodes[countryName] = countryCode;
 // 		};
 
-// 		//console.log(countryCodes);
+// 		console.log(text.length);
 
 // 		fs.writeFile('../map_data/country_codes.json', JSON.stringify(countryCodes), function (error){
 // 			if (error) {
