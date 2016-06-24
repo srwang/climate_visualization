@@ -20,8 +20,15 @@ var projection = d3.geo.stereographic()
 var path = d3.geo.path()
     .projection(projection);
 
-d3.json('map_data/world.json', function (error, world) {
+d3.json('map_data/new_world.json', function (error, world) {
 	if (error) return console.error(error);
+
+	var countries = world.objects.subunits.geometries;
+
+	for (var i = 0; i<countries.length; i++) {
+		console.log(countries[i].id);
+	}
+	console.log('num countries', countries.length);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
 
@@ -75,14 +82,6 @@ function findYearRange() {
 	return range;
 }
 
-$('#year-selector').change(function(){
-	var range = findYearRange();
-	$('#selector-label').text(range[0] + ' -- ' + range[1]);
-
-	//give it initial load
-});
-
-
 d3.json('map_data/country_codes.json', function (error, codes){
 	if (error) return console.log(error);
 
@@ -105,24 +104,28 @@ d3.json('map_data/country_codes.json', function (error, codes){
 					.style('fill', function(){ return 'rgb(' + newColor[0] + ', ' + newColor[1] + ', ' + newColor[2] + ')'});
 			});
 		})(countryCode, yearRange);
-	}
+
+	} //fade effect
 });	
 
-			//depending on the temperature, assign it a class
-			//class will be attached to a different color in the css
+function changeMapColor(){
+	console.log('changing');
+
+	//add reds
+}
 
 
-			//make the entire map one shade
-			//have it change by (tone) as you go up by degrees (?)
-			//create a key
+$('#year-selector').change(function(){
+	var range = findYearRange();
+	$('#selector-label').text(range[0] + ' -- ' + range[1]);
 
+	//give it initial load
+	changeMapColor();
+});
 
-			//between 40 and 80- assign colors in the blue range
-			//then add red tones
-
-//do the calc for color in css (sass??)
-//do the calc for color here and set here
-//color is set: -when the page loads -when the selector is changed
+//equalize the json files
+	//re-scrape country codes? ;__;
+	//check caching
 
 
 //two maps:
