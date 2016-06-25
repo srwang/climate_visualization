@@ -21,14 +21,7 @@ var path = d3.geo.path()
     .projection(projection);
 
 d3.json('map_data/new_world.json', function (error, world) {
-	if (error) return console.error(error);
-
-	var countries = world.objects.subunits.geometries;
-
-	for (var i = 0; i<countries.length; i++) {
-		console.log(countries[i].id);
-	}
-	console.log('num countries', countries.length);
+	if (error) return console.log(error);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
 
@@ -41,7 +34,15 @@ d3.json('map_data/new_world.json', function (error, world) {
 	  .enter().append('path')
 	    .attr('class', 
 	    	function (d) { 
-	    		return 'subunit ' + d.id; 
+	    		return 'subunit ' + d.id.split(' ')[0]; 
+	    	})
+	    .attr('id', 
+	    	function (d) {
+	    		if (d.id.split(' ')[1]) { 
+	    			return d.id.split(' ')[1];
+	    		} else { 
+	    			return d.id.split(' ')[0];
+	    		}
 	    	})
 	    .attr('d', path);
 
@@ -49,7 +50,15 @@ d3.json('map_data/new_world.json', function (error, world) {
 	svg.selectAll('.subunit-label')
 		.data(topojson.feature(world, world.objects.subunits).features)
 	.enter().append('text')
-		.attr('class', function(d) { return 'subunit-label ' + d.id; })
+		.attr('class', 'subunit-label')
+		.attr('id', 
+	    	function (d) {
+	    		if (d.id.split(' ')[1]) { 
+	    			return d.id.split(' ')[1];
+	    		} else { 
+	    			return d.id.split(' ')[0];
+	    		}
+	    	})
 		.attr('transform', function(d) { 
 			var center = path.centroid(d);
 			//adjust for left offset
@@ -62,11 +71,11 @@ d3.json('map_data/new_world.json', function (error, world) {
 	//display labels on hover
 	svg.selectAll('.subunit')
 		.on('mouseenter', function(){ 
-			svg.select('.subunit-label.' + this.classList[1])
+			svg.select('.subunit-label#' + this.id)
 				.style('display', 'block');
 		})
 		.on('mouseleave', function(){
-			svg.select('.subunit-label.' + this.classList[1])
+			svg.select('.subunit-label#' + this.id)
 				.style('display', 'none');
 		});
 });
@@ -91,7 +100,8 @@ d3.json('map_data/country_codes.json', function (error, codes){
 
 		(function(countryCode, yearRange){
 			d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
-
+				if (err) console.log(err);
+				
 				var temp = json.climateData[0].annualData * (9/5) + 32,
 					tempDiff = temp - 42,
 					diffMult = Math.floor(tempDiff / 2),
@@ -100,7 +110,7 @@ d3.json('map_data/country_codes.json', function (error, codes){
 
 				//console.log(diffMult, newColor);
 
-				svg.select('.' + countryCode)
+				svg.selectAll('.' + countryCode)
 					.style('fill', function(){ return 'rgb(' + newColor[0] + ', ' + newColor[1] + ', ' + newColor[2] + ')'});
 			});
 		})(countryCode, yearRange);
