@@ -45,13 +45,13 @@ app.get('/api/:code/:yearRange', function (req, res){
   		endYear = req.params.yearRange.split('to')[1];
 
 	//get data from cache or get from api and store in cache
-	client.get(countryCode, function(error, result) {
+	client.get(countryCode + '-' + startYear, function(error, result) {
 	  	if (result) {
 	  		res.send({'climateData': JSON.parse(result), 'source': 'redis cache'});
 	  	} else {
 	  		getCountryJson(startYear, endYear, countryCode)
 	  			.then(function(response){
-	  				client.setex(countryCode, 1800, JSON.stringify(response.data));
+	  				client.setex(countryCode + '-' + startYear, 1800, JSON.stringify(response.data));
 	  				res.send({'climateData': response.data, 'source': 'World Bank API'});
 	  			}).catch(function(response) {
 	  				if (response.status === 400) {
