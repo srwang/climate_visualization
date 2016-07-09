@@ -1,5 +1,6 @@
 console.log('linked');
 
+$(document).ready(function(){
 
 //SET UP MAP
 var width = $(window).width(),
@@ -10,7 +11,7 @@ var mousePosition0;
 //create SVG
 var svg = d3.select('#map').append('svg')
     .attr('width', width)
-    .attr('height', height)
+    .attr('height', height);
 
 //set map properties
 var projection = d3.geoStereographic()
@@ -27,12 +28,18 @@ var path = d3.geoPath()
 
 var feature;
 
+var backgroundCircle = svg.append("circle")
+    .attr('cx', width / 2)
+    .attr('cy', height / 2)
+    .attr('r', 300);
+
 //RENDER MAP
 d3.json('map_data/new_world.json', function (error, world) {
 	if (error) return console.log(error);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
 
+	//create countries' paths
 	feature = svg.selectAll('.subunit')
 	    .data(topojson.feature(world, world.objects.subunits).features)
 	  .enter().append('path')
@@ -93,8 +100,9 @@ d3.json('map_data/new_world.json', function (error, world) {
 });	
 
 //figure out render speed
-//add background SVG circle 
+//add modals
 
+//DRAGGABLE GLOBE
 var mousePosition0;
 
 svg.on('mousedown', function(){
@@ -103,13 +111,11 @@ svg.on('mousedown', function(){
 
 svg.on('mousemove', function(){
 	if (mousePosition0) {
-		console.log(d3.event.pagX, d3.event.pageY);
+		console.log(d3.event.pageX, d3.event.pageY);
 
 		var currentCenter = projection.rotate(),
 			mousePosition1 = [d3.event.pageX, d3.event.pageY],
 			newCenter = [currentCenter[0] + (mousePosition0[0]-mousePosition1[0]) / 8, currentCenter[1] + (mousePosition1[1]-mousePosition0[1]) / 8];
-
-		d3.event.preventDefault();
 
 	    projection.rotate([-newCenter[0], -newCenter[1], 0]);
 
@@ -204,7 +210,7 @@ function setSvgFill (countryCode, color) {
 			svg.selectAll('.subunit.' + countryCode)
 				.transition()
 				.style('fill', function(){ return 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')'});
-		}, 1300);
+		}, 1500);
 }
 
 function findYearRange() {
@@ -228,6 +234,10 @@ function findYearRange() {
 //add background text
 
 //make page responsive (?)
+
+
+});
+
 
 
 

@@ -16,6 +16,12 @@ h1 {
 /*	background-color: lightblue;*/
 }
 
+circle {
+	fill: rgba(124, 171, 193, 0.32);
+	stroke: aliceblue;
+	stroke-width: 4;
+}
+
 path {
 	stroke: gray;
 	stroke-width: 0.3;
