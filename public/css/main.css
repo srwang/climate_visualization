@@ -16,6 +16,11 @@ h1 {
 /*	background-color: lightblue;*/
 }
 
+path {
+	stroke: gray;
+	stroke-width: 0.3;
+}
+
 .subunit {
 	fill: white;
 }
