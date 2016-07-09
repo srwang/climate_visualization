@@ -1,14 +1,19 @@
 body {
-	font-family: Futura, sans-serif;
+	font-family: 'Noto Serif', serif;
+}
+
+header {
+	padding: 20px;
+	text-align: center;
 }
 
 h1 {
-	text-align: center;
-	font-size: 2em;
+	font-size: 2.5em;
 }
 
 #map {
 /* 	background-color: rgb(19, 19, 74); */
+/*	background-color: lightblue;*/
 }
 
 .subunit {
