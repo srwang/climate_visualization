@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <meta charset='utf-8'>
+<link href='http://localhost:3000/css/normalize.css' rel='stylesheet' type='text/css'>
 <link href='http://localhost:3000/css/main.css' rel='stylesheet' type='text/css'>
 <script src="https://d3js.org/d3.v4.js"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0-rc1/jquery.min.js'></script>
@@ -12,13 +13,18 @@
 </head>
 
 <body>
+	<div id='opacity-layer'></div>
 	<header>
-		<h1>Climate Map</h1>
+		<h2>Climate Map</h2>
+		<input id='year-selector' type='range' value='0' min='0' max='3' step='1'></input>
+		<p id='selector-label'>2020 -- 2039</p>
 	</header>
+	<div id='sidebar'>
+		<h5 id='question-icon'>?</h5>
+	</div>
+	<p>Click and drag to turn globe</p>
 	<div id='map'>
 	</div>
-	<input id='year-selector' type='range' value='0' min='0' max='3' step='1'></input>
-	<p id='selector-label'>2020 -- 2039</p>
 <!-- 	<div id='selectors'></div> -->
 	<script src='http://localhost:3000/js/main.js'></script>
 </body>

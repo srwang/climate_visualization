@@ -1,23 +1,120 @@
 body {
 	font-family: 'Noto Serif', serif;
+/*	background-color: rgb(4, 16, 15);*/
 }
 
+/*#opacity-layer {
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+#opacity-layer::after {
+  content: "";
+  background-image: url('http://previews.123rf.com/images/hacksss23/hacksss231109/hacksss23110900107/10684017-black-and-white-Cracked-soil-of-desert--Stock-Photo.jpg');
+  background-size: cover;
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}*/
+
+/*header*/
 header {
-	padding: 20px;
+	border-bottom: 2px solid blue;
+	background-color: rgb(4, 16, 15);
+	color: white;
+}
+
+h2 {
+	text-transform: uppercase;
+	font-style: bold;
+	margin-left: 20px;
+}
+
+h2, #year-selector, #selector-label {
+	display: inline-block;
+}
+
+#year-selector {
+	width: 20%;
+	margin: 0px 3% 0px 20%;
+	outline: none;
+	cursor: pointer;
+}
+
+#year-selector:hover {
+	border-color: blue;
+}
+
+#selector-label {
+
+}
+
+/*sidebar*/
+#sidebar {
+	display: block;
+	position: absolute;
+	height: 110%;
+	width: 60px;
+	z-index: 999;
+	background-color: rgba(206, 206, 239, 0.85);
+	border-right: 2px solid rgb(206, 206, 239);
+	padding: 0px 10px;
+}
+
+#sidebar p, li {
+	text-align: left;
+}
+
+#question-icon {
+	color: white;
+	font-size: 1.5em;
+	padding: 1px 0px;
+	border: 3px solid white;
+	border-radius: 4%;
 	text-align: center;
 }
 
-h1 {
-	font-size: 2.5em;
+#question-icon:hover {
+	cursor: pointer;
+	border: 2px solid blue;
+	color: blue;
+}
+
+#close-button {
+	float: right;
+	font-size: 1.3em;
+	position: relative;
+	bottom: 30px;
+	left: 5px;
+	cursor: pointer;
+}
+
+
+/*map*/
+p {
+	text-align: center;
+	font-size: 0.9em;
 }
 
 #map {
+	margin-top: 50px;
+
 /* 	background-color: rgb(19, 19, 74); */
 /*	background-color: lightblue;*/
 }
 
-circle {
-	fill: rgba(124, 171, 193, 0.32);
+svg:hover {
+	cursor: pointer;
+}
+
+#background-circle {
+	fill: rgba(95, 160, 157, 0.85);
 	stroke: aliceblue;
 	stroke-width: 4;
 }
@@ -35,9 +132,3 @@ path {
 	color: green;
 }
 
-/*range-slider*/
-#year-selector {
-	width: 30%;
-	margin: 0px auto;
-	outline: none;
-}

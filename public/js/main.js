@@ -31,7 +31,8 @@ var feature;
 var backgroundCircle = svg.append("circle")
     .attr('cx', width / 2)
     .attr('cy', height / 2)
-    .attr('r', 300);
+    .attr('r', 300)
+    .attr('id', 'background-circle');
 
 //RENDER MAP
 d3.json('map_data/new_world.json', function (error, world) {
@@ -95,12 +96,8 @@ d3.json('map_data/new_world.json', function (error, world) {
 				.transition()
 				.delay(200)
 				.style('display', 'none');
-		});
-
+		})
 });	
-
-//figure out render speed
-//add modals
 
 //DRAGGABLE GLOBE
 var mousePosition0;
@@ -132,6 +129,8 @@ svg.on('mousemove', function(){
 
 svg.on('mouseup', function(){
 	mousePosition0=null;
+
+	console.log('up: ', mousePosition0);
 });
 
 //COLORS
@@ -210,7 +209,7 @@ function setSvgFill (countryCode, color) {
 			svg.selectAll('.subunit.' + countryCode)
 				.transition()
 				.style('fill', function(){ return 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')'});
-		}, 1500);
+		}, 1200);
 }
 
 function findYearRange() {
@@ -221,17 +220,36 @@ function findYearRange() {
 	return range;
 }
 
-//make globe
+//SIDENAV
+$('#sidebar').on('click', '#question-icon', function(){
+	$('#sidebar').css({'width':'25%', 'padding':'10px 20px'});
+	$('#sidebar').html(''+
+		'<p id="close-button">x</p>' +
+		'<p>Climate Map pulls data from the <a target="_blank" href="http://www.worldbank.org/en/topic/climatechange">World Bank</a> climate api to make a visualization of projected temperature changes over the current century. The temperatures used are taken from the <a target="_blank" href="https://en.wikipedia.org/wiki/Special_Report_on_Emissions_Scenarios">A2</a> scenario.<p>' + 
+		'<p>To make temperature change more evident, a different calculation is used to generate the initial colors than is used to depict the change, which features deepening red tones per 0.5 degree shift.</p>' +
+		'<p>Rapidly rising temperatures are contributing to:</p>' +
+			'<li></li>' + 
+		'<p>For more information:</p>' + 
+		'<p><a target="_blank" href="http://climate.nasa.gov/effects/">NASA</a></p>' +
+		'<p><a target="_blank" href="https://www.ncdc.noaa.gov/indicators/">NOAA</a></p>');
+});
 
-//menu bar
-	//explanation, gcm
-	//keys 
+$('#sidebar').on('click', '#close-button', function(){
+	$('#sidebar').css({'width':'60px', 'padding':'0px 10px'});
+	$('#sidebar').html('<h5 id="question-icon">?</h5>');		
+});
+
+//finalize sidebar text
+//render speed
 
 //show modal on click
 	//show country name, 2020 average temp, average annual projected change, and next average temperature
+	//reattach click to water
 
-//add background circle image
 //add background text
+
+//facebook "share" plugin
+//loading icon
 
 //make page responsive (?)
 
