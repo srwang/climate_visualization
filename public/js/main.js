@@ -1,6 +1,6 @@
 console.log('linked');
 
-$(document).ready(function(){
+// $(document).ready(function(){
 
 //SET UP MAP
 var width = $(window).width(),
@@ -35,7 +35,11 @@ var backgroundCircle = svg.append("circle")
     .attr('id', 'background-circle');
 
 //RENDER MAP
-d3.json('map_data/new_world.json', function (error, world) {
+d3.queue()
+    .defer(d3.json, 'map_data/new_world.json')
+    .await(ready);
+
+function ready (error, world) {
 	if (error) return console.log(error);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
@@ -97,16 +101,54 @@ d3.json('map_data/new_world.json', function (error, world) {
 				.delay(200)
 				.style('display', 'none');
 		})
-});	
+		.on('click', function(){
+			console.log('clicked');
+
+			$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
+
+			var id = this.id,
+				countryCode = $(this).attr('class').split(' ')[1],
+				countryName = $('.subunit-label#' + id).text(),
+				yearRange = findYearRange();
+
+			console.log(yearRange);
+
+			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
+				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
+
+				$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
+
+				$('#sidebar').html('');
+				$('#sidebar').append('' + 
+					'<p id="close-button">x</p>' +
+					'<h1>' + countryName + '</h1>' +
+					'<p>Temperature in <strong>2020-2039</strong>: ' + yearTwentyTemp + ' &#8457;</p>');
+
+				if (!(yearRange[0] === 2020)) {
+
+					console.log('entering if')
+					d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+						var currentTemp = json.climateData[0].annualData * (9/5) + 32;
+
+						$('#sidebar').append('' +
+							'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
+					});
+
+				}
+			});
+
+
+		});
+};	
 
 //DRAGGABLE GLOBE
 var mousePosition0;
 
-svg.on('mousedown', function(){
+backgroundCircle.on('mousedown', function(){
 	mousePosition0 = [d3.event.pageX, d3.event.pageY];
 });
 
-svg.on('mousemove', function(){
+backgroundCircle.on('mousemove', function(){
 	if (mousePosition0) {
 		console.log(d3.event.pageX, d3.event.pageY);
 
@@ -127,7 +169,7 @@ svg.on('mousemove', function(){
 	}
 });	
 
-svg.on('mouseup', function(){
+backgroundCircle.on('mouseup', function(){
 	mousePosition0=null;
 
 	console.log('up: ', mousePosition0);
@@ -222,22 +264,34 @@ function findYearRange() {
 
 //SIDENAV
 $('#sidebar').on('click', '#question-icon', function(){
-	$('#sidebar').css({'width':'25%', 'padding':'10px 20px'});
-	$('#sidebar').html(''+
-		'<p id="close-button">x</p>' +
-		'<p>Climate Map pulls data from the <a target="_blank" href="http://www.worldbank.org/en/topic/climatechange">World Bank</a> climate api to make a visualization of projected temperature changes over the current century. The temperatures used are taken from the <a target="_blank" href="https://en.wikipedia.org/wiki/Special_Report_on_Emissions_Scenarios">A2</a> scenario.<p>' + 
-		'<p>To make temperature change more evident, a different calculation is used to generate the initial colors than is used to depict the change, which features deepening red tones per 0.5 degree shift.</p>' +
-		'<p>Rapidly rising temperatures are contributing to:</p>' +
-			'<li></li>' + 
-		'<p>For more information:</p>' + 
-		'<p><a target="_blank" href="http://climate.nasa.gov/effects/">NASA</a></p>' +
-		'<p><a target="_blank" href="https://www.ncdc.noaa.gov/indicators/">NOAA</a></p>');
+	$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
+
+	$('#sidebar').html('');
+
+	setTimeout(function(){
+		$('#sidebar').html(''+
+			'<p id="close-button">x</p>' +
+			'<p>Climate Map pulls data from the <a target="_blank" href="http://www.worldbank.org/en/topic/climatechange">World Bank</a> climate api to make a visualization of projected temperature changes over the current century. The temperatures used are taken from the <a target="_blank" href="https://en.wikipedia.org/wiki/Special_Report_on_Emissions_Scenarios">A2</a> scenario.<p>' + 
+			'<p>To make temperature change more evident, a different calculation is used to generate the initial colors than is used to depict the change, which features deepening red tones per 0.5 degree shift.</p>' +
+			// '<p>The effects of global warming are ___ even more quickly than predicted. Rapidly rising temperatures have recently contributed to:</p>' +
+			// 	'<li>Bleaching of </li>' + 
+			'<p>For more information:</p>' + 
+			'<p><a target="_blank" href="https://www.washingtonpost.com/news/capital-weather-gang/wp/2016/05/10/the-most-compelling-visual-of-global-warming-ever-made/">Hawkins Spiral Visualization</a></p>' + 
+			'<p><a target="_blank" href="http://climate.nasa.gov/effects/">NASA</a></p>' +
+			'<p><a target="_blank" href="https://www.ncdc.noaa.gov/indicators/">NOAA</a></p>');
+	},50);
 });
 
 $('#sidebar').on('click', '#close-button', function(){
-	$('#sidebar').css({'width':'60px', 'padding':'0px 10px'});
-	$('#sidebar').html('<h5 id="question-icon">?</h5>');		
+	$('#sidebar').css({'width':'60px', 'transition-duration':'0.05s', 'padding':'0px 10px'});
+
+	$('#sidebar').html('');
+
+	setTimeout(function(){
+		$('#sidebar').html('<h5 id="question-icon">?</h5>');		
+	},50);
 });
+
 
 //finalize sidebar text
 //render speed
@@ -246,15 +300,15 @@ $('#sidebar').on('click', '#close-button', function(){
 	//show country name, 2020 average temp, average annual projected change, and next average temperature
 	//reattach click to water
 
-//add background text
-
-//facebook "share" plugin
 //loading icon
+
+//add background text
+//facebook "share" plugin
 
 //make page responsive (?)
 
 
-});
+// });
 
 
 

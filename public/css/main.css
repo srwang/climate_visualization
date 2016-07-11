@@ -69,6 +69,7 @@ h2, #year-selector, #selector-label {
 
 #sidebar p, li {
 	text-align: left;
+	color: rgb(77, 72, 80);
 }
 
 #question-icon {
@@ -90,9 +91,10 @@ h2, #year-selector, #selector-label {
 	float: right;
 	font-size: 1.3em;
 	position: relative;
-	bottom: 30px;
-	left: 5px;
+	bottom: 40px;
+	left: 20px;
 	cursor: pointer;
+	font-family: Arial, serif;
 }
 
 
