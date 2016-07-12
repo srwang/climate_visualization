@@ -1,15 +1,32 @@
 console.log('linked');
+$('body').addClass('loading');
 
 $(document).ready(function(){
 
+//FACEBOOK SDK
+window.fbAsyncInit = function() {
+	    FB.init({
+	      appId      : '1062966827118776',
+	      xfbml      : true,
+	      version    : 'v2.6'
+	    });
+	  };
+
+(function(d, s, id){
+	var js, fjs = d.getElementsByTagName(s)[0];
+	if (d.getElementById(id)) {return;}
+	js = d.createElement(s); js.id = id;
+	js.src = "//connect.facebook.net/en_US/sdk.js";
+	fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+
 //LOADING ICON
-$('body').addClass('loading');
 setInterval(function(){ 
 	//check all country paths loaded
 	if ($('path').length === 337) {
 		$('body').removeClass('loading');
 	}
-}, 1000);
+}, 700);
 
 // .on('progress', function(error) { 
 // 		console.log('making ajax call'); 
@@ -115,9 +132,6 @@ d3.json('map_data/new_world.json', function(error, world) {
 				.style('display', 'none');
 		})
 		.on('click', function(){
-			console.log('clicked');
-
-			$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
 
 			var id = this.id,
 				countryCode = $(this).attr('class').split(' ')[1],
@@ -131,25 +145,27 @@ d3.json('map_data/new_world.json', function(error, world) {
 				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
 				$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
-
 				$('#sidebar').html('');
-				$('#sidebar').append('' + 
-					'<p id="close-button">x</p>' +
-					'<h1>' + countryName + '</h1>' +
-					'<p>Temperature in <strong>2020-2039</strong>: ' + yearTwentyTemp + ' &#8457;</p>');
 
-				if (!(yearRange[0] === 2020)) {
+				setTimeout(function(){
+					$('#sidebar').append('' + 
+						'<p id="close-button">x</p>' +
+						'<h1>' + countryName + '</h1>' +
+						'<p>Temperature in <strong>2020-2039</strong>: ' + yearTwentyTemp + ' &#8457;</p>');
 
-					console.log('entering if')
-					d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
-						var currentTemp = json.climateData[0].annualData * (9/5) + 32;
-						currentTemp = Math.round(currentTemp * 100) / 100;
+					if (!(yearRange[0] === 2020)) {
 
-						$('#sidebar').append('' +
-							'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
-					});
+						console.log('entering if')
+						d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+							var currentTemp = json.climateData[0].annualData * (9/5) + 32;
+							currentTemp = Math.round(currentTemp * 100) / 100;
 
-				}
+							$('#sidebar').append('' +
+								'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
+						});
+
+					}	
+				}, 30);
 			});
 		});
 });
@@ -286,8 +302,6 @@ $('#sidebar').on('click', '#question-icon', function(){
 			'<p id="close-button">x</p>' +
 			'<p>Climate Map pulls data from the <a target="_blank" href="http://www.worldbank.org/en/topic/climatechange">World Bank</a> climate api to make a visualization of projected temperature changes over the current century. The temperatures used are taken from the <a target="_blank" href="https://en.wikipedia.org/wiki/Special_Report_on_Emissions_Scenarios">A2</a> scenario.<p>' + 
 			'<p>To make temperature change more evident, a different calculation is used to generate the initial colors than is used to depict the change, which features deepening red tones per 0.5 degree shift.</p>' +
-			// '<p>The effects of global warming are ___ even more quickly than predicted. Rapidly rising temperatures have recently contributed to:</p>' +
-			// 	'<li>Bleaching of </li>' + 
 			'<p>For more information:</p>' + 
 			'<p><a target="_blank" href="https://www.washingtonpost.com/news/capital-weather-gang/wp/2016/05/10/the-most-compelling-visual-of-global-warming-ever-made/">Hawkins Spiral Visualization</a></p>' + 
 			'<p><a target="_blank" href="http://climate.nasa.gov/effects/">NASA</a></p>' +
@@ -301,16 +315,21 @@ $('#sidebar').on('click', '#close-button', function(){
 	$('#sidebar').html('');
 
 	setTimeout(function(){
-		$('#sidebar').html('<h5 id="question-icon">?</h5>');		
+		$('#sidebar').html('<h5 id="question-icon">?</h5>' +
+			'<h5 id="share-button">f</h5>');		
 	},50);
 });
 
+$('#sidebar').on('click', '#share-button', function(){
+	FB.ui({
+	method: 'share',
+	display: 'popup',
+	href: 'https://developers.facebook.com/docs/', //change
+	}, function(response){});
+});
 
-//finalize sidebar text
+
 //render speed
-
-//add background text
-//facebook "share" plugin
 
 //make page responsive (?)
 

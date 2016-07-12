@@ -2,27 +2,6 @@ body {
 	font-family: 'Noto Serif', serif;
 /*	background-color: rgb(4, 16, 15);*/
 }
-
-/*#opacity-layer {
-  display: block;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-}
-
-#opacity-layer::after {
-  content: "";
-  background-image: url('http://previews.123rf.com/images/hacksss23/hacksss231109/hacksss23110900107/10684017-black-and-white-Cracked-soil-of-desert--Stock-Photo.jpg');
-  background-size: cover;
-  opacity: 0.3;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  z-index: -1;   
-}*/
-
 /*header*/
 header {
 	border-bottom: 2px solid blue;
@@ -72,7 +51,7 @@ h2, #year-selector, #selector-label {
 	color: rgb(77, 72, 80);
 }
 
-#question-icon {
+#sidebar h5 {
 	color: white;
 	font-size: 1.5em;
 	padding: 1px 0px;
@@ -81,7 +60,7 @@ h2, #year-selector, #selector-label {
 	text-align: center;
 }
 
-#question-icon:hover {
+#sidebar h5:hover {
 	cursor: pointer;
 	border: 2px solid blue;
 	color: blue;
@@ -109,6 +88,13 @@ p {
 
 /* 	background-color: rgb(19, 19, 74); */
 /*	background-color: lightblue;*/
+}
+
+#background-text {
+	font-size: 2em;
+	color: lightblue;
+	line-height: 130%;
+	float: left;
 }
 
 svg:hover {
@@ -144,7 +130,7 @@ path {
     left: 0;
     height: 100%;
     width: 100%;
-    background: rgba( 255, 255, 255, .8 ) 
+    background: rgba( 255, 255, 255, .9 ) 
                 url('http://i.stack.imgur.com/FhHRx.gif') 
                 50% 60% 
                 no-repeat;
