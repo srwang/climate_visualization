@@ -1,6 +1,23 @@
 console.log('linked');
 
-// $(document).ready(function(){
+$(document).ready(function(){
+
+//LOADING ICON
+$('body').addClass('loading');
+setInterval(function(){ 
+	//check all country paths loaded
+	if ($('path').length === 337) {
+		$('body').removeClass('loading');
+	}
+}, 1000);
+
+// .on('progress', function(error) { 
+// 		console.log('making ajax call'); 
+// 		$('body').addClass('loading');
+// 	})
+// 	.on('load', function(xhr) { 
+// 		$('body').removeClass('loading');
+// 	});
 
 //SET UP MAP
 var width = $(window).width(),
@@ -35,11 +52,7 @@ var backgroundCircle = svg.append("circle")
     .attr('id', 'background-circle');
 
 //RENDER MAP
-d3.queue()
-    .defer(d3.json, 'map_data/new_world.json')
-    .await(ready);
-
-function ready (error, world) {
+d3.json('map_data/new_world.json', function(error, world) {
 	if (error) return console.log(error);
 
 	var subunits = topojson.feature(world, world.objects.subunits);
@@ -115,6 +128,7 @@ function ready (error, world) {
 
 			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
 				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
+				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
 				$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
 
@@ -129,6 +143,7 @@ function ready (error, world) {
 					console.log('entering if')
 					d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 						var currentTemp = json.climateData[0].annualData * (9/5) + 32;
+						currentTemp = Math.round(currentTemp * 100) / 100;
 
 						$('#sidebar').append('' +
 							'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
@@ -136,10 +151,8 @@ function ready (error, world) {
 
 				}
 			});
-
-
 		});
-};	
+});
 
 //DRAGGABLE GLOBE
 var mousePosition0;
@@ -296,19 +309,13 @@ $('#sidebar').on('click', '#close-button', function(){
 //finalize sidebar text
 //render speed
 
-//show modal on click
-	//show country name, 2020 average temp, average annual projected change, and next average temperature
-	//reattach click to water
-
-//loading icon
-
 //add background text
 //facebook "share" plugin
 
 //make page responsive (?)
 
 
-// });
+});
 
 
 
