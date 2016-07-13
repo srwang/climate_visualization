@@ -74,10 +74,4 @@ app.get('/api/:code/:yearRange', function (req, res){
 });
 
 //server
-app.get('*', function(req, res, next) {
-  var err = new Error();
-  err.status = 404;
-  next(err);
-});
-
 app.listen(process.env.PORT || 3000);
