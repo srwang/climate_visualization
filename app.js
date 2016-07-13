@@ -6,7 +6,16 @@ var urlencodedBodyParser = bodyParser.urlencoded({extended: false});
 var ejs = require('ejs');
 var responseTime = require('response-time')
 var axios = require('axios');
-var redis = require('redis');
+
+//heroku redis
+if (process.env.REDISTOGO_URL) {
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+	var redis = require("redis").createClient(rtg.port, rtg.hostname);
+
+	redis.auth(rtg.auth.split(":")[1]);
+} else {
+    var redis = require("redis").createClient();
+}
 
 app.use(urlencodedBodyParser);
 app.set('view_engine', 'ejs');

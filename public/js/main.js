@@ -53,9 +53,7 @@ var projection = d3.geoStereographic()
     .center([0, 0])
     .translate([width / 2, height / 2])
     .rotate([0,0,0])
-    .clipAngle(100)
-    .clipExtent([[0, 0], [width, height]])
-    .precision(.1);
+    .clipAngle(100);
 
 var path = d3.geoPath()
     .projection(projection);
@@ -138,8 +136,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 				countryName = $('.subunit-label#' + id).text(),
 				yearRange = findYearRange();
 
-			console.log(yearRange);
-
+			//populate sidebar with individual country's temp data
 			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
 				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
 				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
@@ -185,8 +182,10 @@ backgroundCircle.on('mousemove', function(){
 			mousePosition1 = [d3.event.pageX, d3.event.pageY],
 			newCenter = [currentCenter[0] + (mousePosition0[0]-mousePosition1[0]) / 8, currentCenter[1] + (mousePosition1[1]-mousePosition0[1]) / 8];
 
+		//set rotate according to mouse event
 	    projection.rotate([-newCenter[0], -newCenter[1], 0]);
 
+	    //rerender path using new projection
 		feature.attr('d', d3.geoPath().projection(projection));
 
 		label.attr('transform', function(d) { 
@@ -199,9 +198,8 @@ backgroundCircle.on('mousemove', function(){
 });	
 
 backgroundCircle.on('mouseup', function(){
+	//stop animation on mouseup
 	mousePosition0=null;
-
-	console.log('up: ', mousePosition0);
 });
 
 //COLORS
@@ -293,10 +291,10 @@ function findYearRange() {
 
 //SIDENAV
 $('#sidebar').on('click', '#question-icon', function(){
+
 	$('#sidebar').css({'width':'20%', 'transition-duration':'0.05s', 'padding':'20px 30px'});
-
 	$('#sidebar').html('');
-
+	//populate sidebar with description of app
 	setTimeout(function(){
 		$('#sidebar').html(''+
 			'<p id="close-button">x</p>' +
@@ -310,8 +308,8 @@ $('#sidebar').on('click', '#question-icon', function(){
 });
 
 $('#sidebar').on('click', '#close-button', function(){
+	//go back to icons
 	$('#sidebar').css({'width':'60px', 'transition-duration':'0.05s', 'padding':'0px 10px'});
-
 	$('#sidebar').html('');
 
 	setTimeout(function(){
@@ -320,6 +318,7 @@ $('#sidebar').on('click', '#close-button', function(){
 	},50);
 });
 
+//facebook share
 $('#sidebar').on('click', '#share-button', function(){
 	FB.ui({
 	method: 'share',
