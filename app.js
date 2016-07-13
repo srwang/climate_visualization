@@ -14,7 +14,7 @@ if (process.env.REDISTOGO_URL) {
 
 	redis.auth(rtg.auth.split(":")[1]);
 } else {
-    var redis = require("redis").createClient();
+    var redis = require("redis");
 }
 
 app.use(urlencodedBodyParser);
@@ -80,6 +80,4 @@ app.get('*', function(req, res, next) {
   next(err);
 });
 
-app.listen(process.env.PORT || 3000, function(){
-  console.log('listening on', app.address().port);
-});
+app.listen(process.env.PORT || 3000);
