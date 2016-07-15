@@ -10,9 +10,9 @@ var axios = require('axios');
 
 //heroku redis
 if (process.env.REDIST_URL) {
-    var redis = require('redis').createClient(process.env.REDIS_URL);
+    var client = require('redis').createClient(process.env.REDIS_URL);
 } else {
-    var redis = require("redis");
+    var client = require("redis").createClient();
 }
 
 app.use(urlencodedBodyParser);
@@ -30,8 +30,6 @@ app.get('/map', function (req, res){
 });
 
 //redis routes
-var client = redis.createClient();
-
 client.on('error', function (err) {
     console.log("Error " + err);
 });
