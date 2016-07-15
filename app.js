@@ -9,7 +9,7 @@ var axios = require('axios');
 
 
 //heroku redis
-if (process.env.REDIST_URL) {
+if (process.env.REDIS_URL) {
     var client = require('redis').createClient(process.env.REDIS_URL);
 } else {
     var client = require("redis").createClient();
