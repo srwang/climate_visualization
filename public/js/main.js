@@ -137,7 +137,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 				yearRange = findYearRange();
 
 			//populate sidebar with individual country's temp data
-			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
+			d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/2020to2039', function(err, json){
 				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
 				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
@@ -323,7 +323,7 @@ $('#sidebar').on('click', '#share-button', function(){
 	FB.ui({
 	method: 'share',
 	display: 'popup',
-	href: 'https://developers.facebook.com/docs/', //change
+	href: 'https://climate-vis.herokuapp.com/', 
 	}, function(response){});
 });
 
