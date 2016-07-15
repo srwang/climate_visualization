@@ -7,12 +7,10 @@ var ejs = require('ejs');
 var responseTime = require('response-time')
 var axios = require('axios');
 
-//heroku redis
-if (process.env.REDISTOGO_URL) {
-    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
-	var redis = require("redis").createClient(rtg.port, rtg.hostname);
 
-	redis.auth(rtg.auth.split(":")[1]);
+//heroku redis
+if (process.env.REDIST_URL) {
+    var redis = require('redis').createClient(process.env.REDIS_URL);
 } else {
     var redis = require("redis");
 }
