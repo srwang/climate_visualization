@@ -153,7 +153,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 					if (!(yearRange[0] === 2020)) {
 
 						console.log('entering if')
-						d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+						d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 							var currentTemp = json.climateData[0].annualData * (9/5) + 32;
 							currentTemp = Math.round(currentTemp * 100) / 100;
 
@@ -253,7 +253,7 @@ function changeMapColor(yearRange, callback){
 }
 
 function makeApiCall(countryCode, yearRange, callback) {
-	d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+	d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 		if (err) console.log(err);
 
 		var temp = json.climateData[0].annualData * (9/5) + 32;
