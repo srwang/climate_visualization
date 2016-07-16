@@ -20,6 +20,28 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
+//MAKE SOME API CALLS OFF THE BAT
+//to make load speed quicker later on
+(function() {
+var yearRanges = [[2020, 2039], [2040, 2059], [2060, 2079], [2080, 2099]];
+
+	yearRange.forEach(function(range){
+		//grabbing country codes for api call
+		d3.json('map_data/country_codes.json', function (error, codes){
+			if (error) return console.log(error);
+			
+			for (countryName in codes) {
+				var countryCode = codes[countryName];
+
+				(function(countryCode, yearRange){
+					makeApiCall(countryCode, yearRange);
+				})(countryCode, yearRange);
+
+			} 
+		});	
+	});
+});
+
 //LOADING ICON
 setInterval(function(){ 
 	//check all country paths loaded
@@ -27,14 +49,6 @@ setInterval(function(){
 		$('body').removeClass('loading');
 	}
 }, 700);
-
-// .on('progress', function(error) { 
-// 		console.log('making ajax call'); 
-// 		$('body').addClass('loading');
-// 	})
-// 	.on('load', function(xhr) { 
-// 		$('body').removeClass('loading');
-// 	});
 
 //SET UP MAP
 var width = $(window).width(),
@@ -137,7 +151,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 				yearRange = findYearRange();
 
 			//populate sidebar with individual country's temp data
-			d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/2020to2039', function(err, json){
+			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
 				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
 				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
@@ -153,7 +167,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 					if (!(yearRange[0] === 2020)) {
 
 						console.log('entering if')
-						d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+						d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 							var currentTemp = json.climateData[0].annualData * (9/5) + 32;
 							currentTemp = Math.round(currentTemp * 100) / 100;
 
@@ -253,7 +267,7 @@ function changeMapColor(yearRange, callback){
 }
 
 function makeApiCall(countryCode, yearRange, callback) {
-	d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+	d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 		if (err) console.log(err);
 
 		var temp = json.climateData[0].annualData * (9/5) + 32;
@@ -278,7 +292,7 @@ function setSvgFill (countryCode, color) {
 			svg.selectAll('.subunit.' + countryCode)
 				.transition()
 				.style('fill', function(){ return 'rgb(' + color[0] + ', ' + color[1] + ', ' + color[2] + ')'});
-		}, 1200);
+		}, 500);
 }
 
 function findYearRange() {
@@ -323,7 +337,7 @@ $('#sidebar').on('click', '#share-button', function(){
 	FB.ui({
 	method: 'share',
 	display: 'popup',
-	href: 'https://climate-vis.herokuapp.com/', 
+	href: 'http://localhost:3000/', 
 	}, function(response){});
 });
 
