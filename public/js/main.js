@@ -165,7 +165,6 @@ d3.json('map_data/new_world.json', function(error, world) {
 
 					if (!(yearRange[0] === 2020)) {
 
-						console.log('entering if')
 						d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 							var currentTemp = json.climateData[0].annualData * (9/5) + 32;
 							currentTemp = Math.round(currentTemp * 100) / 100;
@@ -198,6 +197,8 @@ backgroundCircle.on('mousemove', function(){
 		//set rotate according to mouse event
 	    projection.rotate([-newCenter[0], -newCenter[1], 0]);
 
+	    //add loading icon
+		$('body').addClass('loading');
 	    //rerender path using new projection
 		feature.attr('d', d3.geoPath().projection(projection));
 
@@ -207,6 +208,10 @@ backgroundCircle.on('mousemove', function(){
 				return 'translate(' + [center[0] - 20, center[1]] + ')';
 			}
 		});
+
+		setTimeout(function(){
+			$('body').removeClass('loading');
+		}, 500)
 	}
 });	
 
