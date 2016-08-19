@@ -20,12 +20,12 @@ window.fbAsyncInit = function() {
 	fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));
 
-//MAKE SOME API CALLS OFF THE BAT
+//CACHE SOME API CALLS OFF THE BAT
 //to make load speed quicker later on
 (function() {
 var yearRanges = [[2020, 2039], [2040, 2059], [2060, 2079], [2080, 2099]];
 
-	yearRange.forEach(function(range){
+	yearRanges.forEach(function(yearRange){
 		//grabbing country codes for api call
 		d3.json('map_data/country_codes.json', function (error, codes){
 			if (error) return console.log(error);
@@ -33,14 +33,13 @@ var yearRanges = [[2020, 2039], [2040, 2059], [2060, 2079], [2080, 2099]];
 			for (countryName in codes) {
 				var countryCode = codes[countryName];
 
-				(function(countryCode, yearRange){
-					makeApiCall(countryCode, yearRange);
-				})(countryCode, yearRange);
-
+				d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+					if (err) console.log(err);
+				});
 			} 
 		});	
 	});
-});
+})();
 
 //LOADING ICON
 setInterval(function(){ 
@@ -249,6 +248,15 @@ $('#year-selector').change(function(){
 	}
 });
 
+//bind event to changing CSS
+// $('.subunit').bind("attributes", function(ev){
+// 	ev.type // "attributes"
+// 	ev.attributeName // "title"
+// 	ev.oldValue // ""
+// 	ev.target // el
+// });
+// $(el).attr("title","Mr. Sprinkles")
+
 //color-related functions
 function changeMapColor(yearRange, callback){
 
@@ -344,7 +352,6 @@ $('#sidebar').on('click', '#share-button', function(){
 
 //render speed
 
-//make page responsive (?)
 
 
 });
