@@ -42,12 +42,16 @@ var yearRanges = [[2020, 2039], [2040, 2059], [2060, 2079], [2080, 2099]];
 })();
 
 //LOADING ICON
-setInterval(function(){ 
-	//check all country paths loaded
+setInterval(removeLoadingIcon(), 700);
+
+//check if all country paths drawn
+function removeLoadingIcon() {
 	if ($('path').length === 337) {
-		$('body').removeClass('loading');
+		setTimeout(function(){//give colors time to load
+			$('body').removeClass('loading');
+		}, 1500);
 	}
-}, 700);
+}
 
 //SET UP MAP
 var width = $(window).width(),
