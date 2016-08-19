@@ -33,7 +33,7 @@ var yearRanges = [[2020, 2039], [2040, 2059], [2060, 2079], [2080, 2099]];
 			for (countryName in codes) {
 				var countryCode = codes[countryName];
 
-				d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+				d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 					if (err) console.log(err);
 				});
 			} 
@@ -150,7 +150,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 				yearRange = findYearRange();
 
 			//populate sidebar with individual country's temp data
-			d3.json('http://localhost:3000/api/' + countryCode + '/2020to2039', function(err, json){
+			d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/2020to2039', function(err, json){
 				var yearTwentyTemp = json.climateData[0].annualData * (9/5) + 32;
 				yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
@@ -165,7 +165,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 
 					if (!(yearRange[0] === 2020)) {
 
-						d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+						d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 							var currentTemp = json.climateData[0].annualData * (9/5) + 32;
 							currentTemp = Math.round(currentTemp * 100) / 100;
 
@@ -253,15 +253,6 @@ $('#year-selector').change(function(){
 	}
 });
 
-//bind event to changing CSS
-// $('.subunit').bind("attributes", function(ev){
-// 	ev.type // "attributes"
-// 	ev.attributeName // "title"
-// 	ev.oldValue // ""
-// 	ev.target // el
-// });
-// $(el).attr("title","Mr. Sprinkles")
-
 //color-related functions
 function changeMapColor(yearRange, callback){
 
@@ -280,7 +271,7 @@ function changeMapColor(yearRange, callback){
 }
 
 function makeApiCall(countryCode, yearRange, callback) {
-	d3.json('http://localhost:3000/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
+	d3.json('https://climate-vis.herokuapp.com/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1], function(err, json){
 		if (err) console.log(err);
 
 		var temp = json.climateData[0].annualData * (9/5) + 32;
@@ -350,7 +341,7 @@ $('#sidebar').on('click', '#share-button', function(){
 	FB.ui({
 	method: 'share',
 	display: 'popup',
-	href: 'http://localhost:3000/', 
+	href: 'https://climate-vis.herokuapp.com/', 
 	}, function(response){});
 });
 
