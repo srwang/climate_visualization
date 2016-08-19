@@ -49,7 +49,7 @@ function removeLoadingIcon() {
 	if ($('path').length === 337) {
 		setTimeout(function(){//give colors time to load
 			$('body').removeClass('loading');
-		}, 2000);
+		}, 4000);
 	}
 }
 
