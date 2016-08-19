@@ -146,9 +146,7 @@ d3.json('map_data/new_world.json', function(error, world) {
 				.delay(200)
 				.style('display', 'none');
 		})
-		.on('click', function(e){
-
-			e.stopPropagation();
+		.on('click', function(){
 
 			var id = this.id,
 				countryCode = $(this).attr('class').split(' ')[1],
