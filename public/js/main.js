@@ -146,7 +146,9 @@ d3.json('map_data/new_world.json', function(error, world) {
 				.delay(200)
 				.style('display', 'none');
 		})
-		.on('click', function(){
+		.on('click', function(e){
+
+			e.stopPropagation();
 
 			var id = this.id,
 				countryCode = $(this).attr('class').split(' ')[1],
@@ -192,7 +194,6 @@ backgroundCircle.on('mousedown', function(){
 
 backgroundCircle.on('mousemove', function(){
 	if (mousePosition0) {
-		console.log(d3.event.pageX, d3.event.pageY);
 
 		var currentCenter = projection.rotate(),
 			mousePosition1 = [d3.event.pageX, d3.event.pageY],
