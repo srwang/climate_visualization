@@ -15,7 +15,7 @@ fbSDK.share(config.base);
 //CACHE SOME API CALLS OFF THE BAT
 (function(){
 	config.yearRanges.forEach(function(range){
-		promise.get(config.base + 'map_data/country_codes.json')
+		promise.get(config.base + '/map_data/country_codes.json')
 		.then(function(codes){
 			for (country in codes) {
 				promise.get(config.base + '/api/' + codes[country] + '/' + range[0] + 'to' + range[1]);
