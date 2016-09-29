@@ -40,7 +40,7 @@ map.createCountries(promise, config);
 map.drag();
 
 //COLORS
-calcTemp.setInitialColor(promise, config, svg);
+//calcTemp.setInitialColor(promise, config, svg);
 calcTemp.setColorWithSlider(promise, config, svg);
 
 //SIDENAV EVENTS
