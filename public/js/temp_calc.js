@@ -44,7 +44,7 @@ function changeMapColor(promise, config, yearRange, callback){
 };
 
 function makeApiCall(promise, config, countryCode, yearRange, callback) {
-	promise.get('/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1])
+	promise.get(config.base + '/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1])
 	.then(function(data){
 		var temp = data.climateData[0].annualData * (9/5) + 32;
 
