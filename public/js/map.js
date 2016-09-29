@@ -35,7 +35,7 @@ module.exports = {
 		return svg
 	},
 	createCountries: function(promise, config) {
-		promise.get('map_data/new_world.json')
+		promise.get(config.base + 'map_data/new_world.json')
 		.then(function(world){
 			
 			var subunits = topojson.feature(world, world.objects.subunits);
