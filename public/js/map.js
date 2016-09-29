@@ -38,7 +38,6 @@ module.exports = {
 		promise.get('map_data/new_world.json')
 		.then(function(world){
 			
-			world = JSON.parse(world);
 			var subunits = topojson.feature(world, world.objects.subunits);
 			//create countries' paths
 			feature = svg.selectAll('.subunit')
@@ -126,14 +125,12 @@ module.exports = {
 			mousePosition0=null;
 		});
 	}
-
 }
 
 function populateSidebar(promise, config, id, countryCode, countryName, yearRange) {
 
 	promise.get(config.base + '/api/' + countryCode + '/2020to2039')
 	.then(function(data){
-		data = JSON.parse(data);
 		var yearTwentyTemp = data.climateData[0].annualData * (9/5) + 32;
 		yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
 
@@ -154,15 +151,16 @@ function populateSidebar(promise, config, id, countryCode, countryName, yearRang
 		}
 	})
 	.then(function(currentTempData){
-		currentTempData = JSON.parse(currentTempData);
-		currentTemp = currentTempData.climateData[0].annualData * (9/5) + 32;
-		currentTemp = Math.round(currentTemp * 100) / 100;
+		if (currentTempData) {
+			currentTemp = currentTempData.climateData[0].annualData * (9/5) + 32;
+			currentTemp = Math.round(currentTemp * 100) / 100;
 
-		if (!currentTemp) currentTemp = 'Unknown'; 
+			if (!currentTemp) currentTemp = 'Unknown'; 
 
-		setTimeout(function(){
-			$('#sidebar').append('' +
-				'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
-		}, config.sidebarDisplay);
+			setTimeout(function(){
+				$('#sidebar').append('' +
+					'<p>Temperature in ' + yearRange[0] + '-<strong>' + yearRange[1] + ': ' + currentTemp + '</strong> &#8457;</p>');
+			}, config.sidebarDisplay);
+		}
 	});
 }

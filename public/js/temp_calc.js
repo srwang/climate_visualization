@@ -35,7 +35,6 @@ module.exports = {
 function changeMapColor(promise, config, yearRange, callback){
 	promise.get('map_data/country_codes.json')
 	.then(function(codes){
-		codes = JSON.parse(codes);
 		for (country in codes) {
 			(function(countryCode, yearRange){
 				makeApiCall(promise, config, countryCode, yearRange, callback);
@@ -47,11 +46,10 @@ function changeMapColor(promise, config, yearRange, callback){
 function makeApiCall(promise, config, countryCode, yearRange, callback) {
 	promise.get(config.base + '/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1])
 	.then(function(data){
-		data = JSON.parse(data);
 		var temp = data.climateData[0].annualData * (9/5) + 32;
 
 		if (yearRange[0] === 2020) {
-			//create config.base color for 2020
+			//create base color for 2020
 			var tempDiff = temp - 42,
 			diffMult = Math.floor(tempDiff / 2),
 			standardColor = [101, 145, 177],
