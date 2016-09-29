@@ -12,6 +12,8 @@ var config = require('./config'),
 //FB SHARE
 fbSDK.share(config.base);
 
+debugger
+
 //CACHE SOME API CALLS OFF THE BAT
 (function(){
 	config.yearRanges.forEach(function(range){
