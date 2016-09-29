@@ -18,7 +18,7 @@ fbSDK.share(config.base);
 		promise.get('map_data/country_codes.json')
 		.then(function(codes){
 			for (country in codes) {
-				promise.get('/api/' + codes[country] + '/' + range[0] + 'to' + range[1]);
+				promise.get(config.base + '/api/' + codes[country] + '/' + range[0] + 'to' + range[1]);
 			}
 		})
 	})
