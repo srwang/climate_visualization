@@ -33,7 +33,7 @@ module.exports = {
 }
 
 function changeMapColor(promise, config, yearRange, callback){
-	promise.get(config.base + 'map_data/country_codes.json')
+	promise.get(config.base + '/map_data/country_codes.json')
 	.then(function(codes){
 		for (country in codes) {
 			(function(countryCode, yearRange){
