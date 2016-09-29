@@ -108,9 +108,6 @@ module.exports = {
 
 				//set rotate according to mouse event
 			    projection.rotate([-newCenter[0], -newCenter[1], 0]);
-				 //add loading icon
-				$('body').addClass('loading');
-
 			    //rerender path using new projection
 				feature.attr('d', d3.geoPath().projection(projection));
 				//rerender labels
@@ -121,9 +118,6 @@ module.exports = {
 					}
 				});	
 
-				setTimeout(function(){
-					$('body').removeClass('loading');
-				}, 500)	
 			}
 		})
 
