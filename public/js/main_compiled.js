@@ -54,15 +54,13 @@ var config = require('./config'),
 //FB SHARE
 fbSDK.share(config.base);
 
-debugger
-
 //CACHE SOME API CALLS OFF THE BAT
 (function(){
 	config.yearRanges.forEach(function(range){
 		promise.get('map_data/country_codes.json')
 		.then(function(codes){
 			for (country in codes) {
-				promise.get(config.base + '/api/' + codes[country] + '/' + range[0] + 'to' + range[1]);
+				promise.get('/api/' + codes[country] + '/' + range[0] + 'to' + range[1]);
 			}
 		})
 	})
