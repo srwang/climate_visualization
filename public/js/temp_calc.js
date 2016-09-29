@@ -5,6 +5,7 @@ module.exports = {
 		});
 	},
 	setColorWithSlider: function(promise, config, svg) {
+		//change saturation of reds in map as temps increment or decrement w/ time
 		$('#year-selector').change(function(){
 			var range = findYearRange(config);
 			$('#selector-label').text(range[0] + ' -- ' + range[1]);
