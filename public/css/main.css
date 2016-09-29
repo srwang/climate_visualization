@@ -44,6 +44,19 @@ h2, #year-selector, #selector-label {
 	background-color: rgba(206, 206, 239, 0.85);
 	border-right: 2px solid rgb(206, 206, 239);
 	padding: 0px 10px;
+	transition-duration:0.05s;
+}
+
+#sidebar.show-data { 
+	width:20%;
+	padding:20px 30px;
+	transition-duration:0.05s;
+}
+
+#sidebar.show-facts {
+	width:20%;
+	padding:20px 30px;
+	transition-duration:0.05s; 
 }
 
 #sidebar p, li {
