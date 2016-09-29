@@ -1,5 +1,5 @@
 module.exports =  {
-	base: 'http://localhost:3000',
+	base: 'https://climate-vis.herokuapp.com',
 	checkMapLoaded: 700, //interval to check
 	colorLoading: 4000,
 	svgFill: 500,
