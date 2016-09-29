@@ -129,7 +129,7 @@ module.exports = {
 
 function populateSidebar(promise, config, id, countryCode, countryName, yearRange) {
 
-	promise.get(config.base + '/api/' + countryCode + '/2020to2039')
+	promise.get('/api/' + countryCode + '/2020to2039')
 	.then(function(data){
 		var yearTwentyTemp = data.climateData[0].annualData * (9/5) + 32;
 		yearTwentyTemp = Math.round(yearTwentyTemp * 100) / 100;
@@ -147,7 +147,7 @@ function populateSidebar(promise, config, id, countryCode, countryName, yearRang
 		}, config.sidebarDisplay);
 
 		if (!(yearRange[0] === 2020)) {
-			return promise.get(config.base + '/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1])
+			return promise.get('/api/' + countryCode + '/' + yearRange[0] + 'to' + yearRange[1])
 		}
 	})
 	.then(function(currentTempData){
